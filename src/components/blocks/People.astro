@@ -1,0 +1,50 @@
+---
+/**
+ * Grid of circular portraits with name and affiliation.
+ * Entries without a photo fall back to the generic profile glyph.
+ */
+export interface Person {
+  name: string;
+  company?: string;
+  image?: string;
+  href?: string;
+}
+
+interface Props {
+  heading?: string;
+  people: Person[];
+}
+
+const { heading, people } = Astro.props;
+---
+
+<div class="block block-people website-content page-block">
+  {heading && <h2>{heading}</h2>}
+  <div class="people">
+    {
+      people.map((person) => {
+        const label = (
+          <>
+            <div class="person-name">{person.name}</div>
+            {person.company && <div class="person-company">{person.company}</div>}
+          </>
+        );
+
+        return (
+          <div class="person">
+            <div class:list={['person-image', { 'person-image-default': !person.image }]}>
+              {person.image && <img src={person.image} alt={person.name} />}
+            </div>
+            {person.href ? (
+              <a href={person.href} target="_blank" rel="noopener">
+                {label}
+              </a>
+            ) : (
+              label
+            )}
+          </div>
+        );
+      })
+    }
+  </div>
+</div>

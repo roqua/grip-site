@@ -1,0 +1,20 @@
+---
+/**
+ * Body copy inside a news article.
+ */
+interface Props {
+  width?: 'half' | 'full';
+  /** Flow prose into two balanced columns. */
+  columns?: boolean;
+}
+
+const { width = 'full', columns = false } = Astro.props;
+---
+
+<div class="block block-news-text website-content news-block">
+  <div
+    class:list={[{ 'half-width': width === 'half', 'block-text-columns': columns }]}
+  >
+    <slot />
+  </div>
+</div>

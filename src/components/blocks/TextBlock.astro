@@ -1,0 +1,35 @@
+---
+/**
+ * Plain prose block. Defaults to the half-width measure the live site uses for
+ * body copy; `width="full"` spans the content column and `columns` flows the
+ * text into newspaper columns (used by the privacy and terms pages).
+ */
+interface Props {
+  width?: 'half' | 'full';
+  /** Flow prose into two balanced columns. */
+  columns?: boolean;
+  /** Centre the block and narrow the measure. */
+  center?: boolean;
+  /** Adds the `news-block` tightened spacing used inside articles. */
+  news?: boolean;
+}
+
+const { width = 'half', columns = false, center = false, news = false } = Astro.props;
+---
+
+<div
+  class:list={[
+    'block',
+    'website-content',
+    'block-text',
+    { 'block-center': center, 'news-block': news },
+  ]}
+>
+  <div
+    class:list={[
+      { 'half-width': width === 'half' && !center, 'block-text-columns': columns },
+    ]}
+  >
+    <slot />
+  </div>
+</div>

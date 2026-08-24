@@ -1,0 +1,45 @@
+---
+/**
+ * News index: a responsive grid of article cards (3 up, 2 up, then 1 up).
+ * Articles come from the content collection, newest first.
+ */
+import { getCollection } from 'astro:content';
+import { formatDutchDate } from '../../lib/date';
+
+interface Props {
+  heading?: string;
+}
+
+const { heading } = Astro.props;
+
+const articles = (await getCollection('pages', ({ data }) => data.type === 'news')).sort(
+  (a, b) => (b.data.date?.getTime() ?? 0) - (a.data.date?.getTime() ?? 0)
+);
+---
+
+<div class="block website-content page-block">
+  {heading && <h2>{heading}</h2>}
+  <div class="block-news">
+    {
+      articles.map((article) => (
+        <div class="news-card">
+          {article.data.image && (
+            <img
+              class="img-responsive card-image"
+              src={article.data.image}
+              alt={article.data.imageAlt ?? ''}
+            />
+          )}
+          <div class="card-content">
+            {article.data.date && (
+              <div class="news-publish-date">{formatDutchDate(article.data.date)}</div>
+            )}
+            <a href={`/pages/${article.id}`}>
+              <h3>{article.data.title}</h3>
+            </a>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>

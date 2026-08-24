@@ -1,0 +1,16 @@
+---
+/**
+ * Rounded photo that overlaps upward into the PageHeader band above it.
+ * Always follows a <PageHeader />.
+ */
+interface Props {
+  src: string;
+  alt?: string;
+}
+
+const { src, alt = '' } = Astro.props;
+---
+
+<div class="block block-header-image website-content">
+  <img class="img-responsive img-rounded header-image" src={src} alt={alt} />
+</div>

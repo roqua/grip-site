@@ -1,0 +1,19 @@
+---
+/**
+ * Interior page header: deep navy band with the orange squiggle artwork.
+ * Used on nieuws, over-ons, werking, onderzoek, projectgroep and legal pages.
+ */
+interface Props {
+  heading: string;
+  /** Constrain the headline to half width, as the live site does on most interior pages. */
+  half?: boolean;
+}
+
+const { heading, half = false } = Astro.props;
+---
+
+<div class="block block-header page-block">
+  <div class="website-content">
+    <h1 class:list={[{ 'half-width': half }]}>{heading}</h1>
+  </div>
+</div>

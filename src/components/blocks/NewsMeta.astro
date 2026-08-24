@@ -1,0 +1,60 @@
+---
+/**
+ * The two rows that sit between an article masthead and its body copy:
+ * a row of share links, then the publication date beside a back-link to
+ * the news index.
+ */
+import { formatDutchDate } from '../../lib/date';
+
+interface Props {
+  date?: Date;
+  /** Absolute URL of the article, used to build the share links. */
+  url: string;
+  title: string;
+}
+
+const { date, url, title } = Astro.props;
+
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+
+const shares = [
+  {
+    network: 'facebook',
+    label: 'Deel op Facebook',
+    href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
+  },
+  {
+    network: 'twitter',
+    label: 'Deel op X',
+    href: `https://twitter.com/intent/tweet?text=${encodedTitle}%20${encodedUrl}`,
+  },
+  {
+    network: 'linkedin',
+    label: 'Deel op LinkedIn',
+    href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}`,
+  },
+  { network: 'whatsapp', label: 'Deel via WhatsApp', href: `https://wa.me/?text=${encodedUrl}` },
+];
+---
+
+<div class="block block-news-social website-content">
+  {
+    shares.map((share) => (
+      <a
+        class:list={['link-social', `link-${share.network}`]}
+        href={share.href}
+        target="_blank"
+        rel="noopener"
+        aria-label={share.label}
+      />
+    ))
+  }
+</div>
+
+<div class="block block-news-text website-content news-block">
+  <div class="news-info">
+    {date && <div class="news-publish-date">{formatDutchDate(date)}</div>}
+    <a class="btn btn-purple btn-outlined" href="/pages/nieuws">all news messages</a>
+  </div>
+</div>

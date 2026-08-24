@@ -1,0 +1,20 @@
+---
+/**
+ * Article masthead: a short navy band, then a rounded cover photo that
+ * overlaps up into it with the headline sitting at its bottom edge.
+ */
+interface Props {
+  heading: string;
+  image: string;
+}
+
+const { heading, image } = Astro.props;
+---
+
+<div class="block block-header block-news-header news-block"></div>
+<div
+  class="block block-news-image website-content news-block"
+  style={`background-image: url(${image});`}
+>
+  <h1>{heading}</h1>
+</div>

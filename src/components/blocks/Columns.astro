@@ -1,0 +1,67 @@
+---
+/**
+ * Media beside text, in either order.
+ *
+ *   side="left"  → media on the left, text on the right (text-column--right)
+ *   side="right" → text on the left, media on the right (text-column--left)
+ *
+ * The media column takes either an `image` or a `video` (with `poster`).
+ * `lined` keeps the block attached to the pale-blue vertical rule.
+ */
+import ColumnMedia from './ColumnMedia.astro';
+
+interface Props {
+  image?: string;
+  alt?: string;
+  /** Video source; renders a poster-backed <video> instead of an image. */
+  video?: string;
+  poster?: string;
+  /** Which side the media sits on. */
+  side?: 'left' | 'right';
+  lined?: boolean;
+  /** Adds the `news-block` tightened spacing used inside articles. */
+  news?: boolean;
+}
+
+const {
+  image,
+  alt = '',
+  video,
+  poster,
+  side = 'left',
+  lined = false,
+  news = false,
+} = Astro.props;
+
+const textClass = `block-column text-column ${
+  side === 'left' ? 'text-column--right' : 'text-column--left'
+}`;
+---
+
+<div
+  class:list={[
+    'block',
+    'website-content',
+    'block-columns',
+    'page-block',
+    { 'block-lined': lined, 'news-block': news },
+  ]}
+>
+  {
+    side === 'left' ? (
+      <>
+        <ColumnMedia image={image} alt={alt} video={video} poster={poster} side={side} />
+        <div class={textClass}>
+          <slot />
+        </div>
+      </>
+    ) : (
+      <>
+        <div class={textClass}>
+          <slot />
+        </div>
+        <ColumnMedia image={image} alt={alt} video={video} poster={poster} side={side} />
+      </>
+    )
+  }
+</div>

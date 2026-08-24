@@ -1,0 +1,19 @@
+---
+/**
+ * CTA attached to the vertical rule of a <Lined /> block: a ringed dot on the
+ * rule plus a connector stub running into the button.
+ */
+interface Props {
+  href: string;
+  /** Ring and connector colour. */
+  color?: 'blue' | 'orange';
+}
+
+const { href, color = 'blue' } = Astro.props;
+---
+
+<div class:list={['block-line-button', `${color}-line`]}>
+  <a class:list={['btn', 'btn-secondary', { 'btn-orange': color === 'orange' }]} href={href}>
+    <slot />
+  </a>
+</div>
