@@ -3,6 +3,7 @@
 export const NAV = [
   { slug: 'huisarts', label: 'behandelaar' },
   { slug: 'patient', label: 'patiënt' },
+  // { slug: 'uitleg', label: 'uitleg' },
   { slug: 'nieuws', label: 'nieuws' },
   { slug: 'over-ons', label: 'over ons' },
 ] as const;
