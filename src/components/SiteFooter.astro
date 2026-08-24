@@ -1,0 +1,78 @@
+---
+import { FOOTER_LINKS, CONTACT, COPYRIGHT, PARTNER } from '../config/site';
+
+interface Props {
+  /** Breadcrumb trail; the last entry renders as the current (non-link) crumb. */
+  crumbs?: { label: string; href?: string }[];
+}
+
+const { crumbs = [] } = Astro.props;
+---
+
+<div class="website-footer">
+  {
+    crumbs.length > 0 && (
+      <div class="website-footer-bar breadcrumbs">
+        <div class="website-content">
+          {crumbs.map((crumb, i) => (
+            <>
+              {i > 0 && <span class="crumb-along">/</span>}
+              {crumb.href ? (
+                <a href={crumb.href}>{crumb.label}</a>
+              ) : (
+                <span class="current">{crumb.label}</span>
+              )}
+            </>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  <div class="website-content">
+    <div class="footer-columns">
+      <div class="footer-column">
+        <h3>Grip</h3>
+        <a class={`footer-logo ${PARTNER.logoClass}`} href={PARTNER.href} aria-label={PARTNER.label}
+        ></a>
+      </div>
+
+      <div class="footer-column">
+        <h3>Links</h3>
+        <ul class="footer-links">
+          {
+            FOOTER_LINKS.map((link) => (
+              <li>
+                <a href={link.href}>{link.label}</a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="footer-column footer-column--bordered">
+        <h3>Contact</h3>
+        <p>{CONTACT.org}</p>
+        <p class="normalize">
+          {
+            CONTACT.addressLines.map((line, i) => (
+              <>
+                {i > 0 && <br />}
+                {line}
+              </>
+            ))
+          }
+        </p>
+        <p><a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="website-footer-bar">
+    <div class="website-content">
+      <div class="footer-text">
+        <div class="footer-text-part">{COPYRIGHT}</div>
+      </div>
+    </div>
+  </div>
+</div>

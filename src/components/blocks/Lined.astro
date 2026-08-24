@@ -1,0 +1,22 @@
+---
+/**
+ * Half-width text block hanging off the pale-blue vertical rule.
+ *
+ * Optional `buttons` slot renders CTAs that sit on the rule itself:
+ *
+ *   <Lined>
+ *     ## Heading
+ *     Body copy…
+ *     <div slot="buttons">
+ *       <LineButton href="/pages/patient">Voor de patiënt</LineButton>
+ *     </div>
+ *   </Lined>
+ */
+---
+
+<div class="block block-lined website-content page-block">
+  <div class="half-width">
+    <slot />
+  </div>
+  <slot name="buttons" />
+</div>

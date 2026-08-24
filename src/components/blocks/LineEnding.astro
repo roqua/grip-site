@@ -1,0 +1,24 @@
+---
+/**
+ * The rule's final flourish: a rounded connector that switches direction, a
+ * device/QR artwork anchored right, and a last half-width text column.
+ *
+ * `ending` selects the artwork — one per landing page:
+ *   home     → App Store / Play Store QR code
+ *   huisarts → "piekeren" phone mockup
+ *   patient  → "balans" phone mockup
+ */
+interface Props {
+  ending: 'home' | 'huisarts' | 'patient';
+}
+
+const { ending } = Astro.props;
+---
+
+<div class="block website-content page-block">
+  <div class="block-line-switch"></div>
+  <div class:list={['block-line-ending', `ending-on-${ending}`]}></div>
+  <div class="half-width">
+    <slot />
+  </div>
+</div>

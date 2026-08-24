@@ -1,0 +1,22 @@
+---
+/**
+ * Dark navy rounded banner with centred white text, optionally with a
+ * floated image or video poster bleeding out of the top-left corner.
+ */
+interface Props {
+  heading?: string;
+  /** Optional artwork floated top-left out of the banner. */
+  media?: string;
+  mediaAlt?: string;
+}
+
+const { heading, media, mediaAlt = '' } = Astro.props;
+---
+
+<div class="block website-content">
+  <div class="block-banner">
+    {media && <img class="img-responsive banner-media img-rounded" src={media} alt={mediaAlt} />}
+    {heading && <h2>{heading}</h2>}
+    <slot />
+  </div>
+</div>

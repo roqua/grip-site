@@ -1,0 +1,41 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { blocks } from '../../components/mdx-components';
+import NewsHero from '../../components/blocks/NewsHero.astro';
+import NewsMeta from '../../components/blocks/NewsMeta.astro';
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages');
+  return pages
+    // `home` is rendered at / by src/pages/index.astro.
+    .filter((entry) => entry.id !== 'home')
+    .map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, description, type, date, image, crumb, nav } = entry.data;
+
+const isNews = type === 'news';
+
+// News articles hang off the Nieuws index in the breadcrumb trail.
+const crumbs = isNews
+  ? [{ label: 'Nieuws', href: '/pages/nieuws' }, { label: crumb ?? title }]
+  : [{ label: crumb ?? title }];
+
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  current={nav ?? (isNews ? 'nieuws' : undefined)}
+  crumbs={crumbs}
+  image={image}
+>
+  {isNews && image && <NewsHero heading={title} image={image} />}
+  {isNews && <NewsMeta date={date} url={canonical} title={title} />}
+  <Content components={blocks} />
+</BaseLayout>

@@ -1,0 +1,32 @@
+---
+/**
+ * The media half of a <Columns /> block: either an image or a
+ * poster-backed video.
+ */
+interface Props {
+  image?: string;
+  alt?: string;
+  video?: string;
+  poster?: string;
+  /** Which side the media sits on; picks the bleed direction. */
+  side: 'left' | 'right';
+}
+
+const { image, alt = '', video, poster, side } = Astro.props;
+
+const mediaClass = `img-responsive img-rounded ${
+  side === 'left' ? 'block-image-left' : 'block-image-right'
+}`;
+---
+
+<div class="block-column image-column img-center">
+  {
+    video ? (
+      <video class={mediaClass} controls controlslist="nodownload" poster={poster}>
+        <source src={video} type="video/mp4" />
+      </video>
+    ) : (
+      <img class={mediaClass} src={image} alt={alt} />
+    )
+  }
+</div>

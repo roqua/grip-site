@@ -1,0 +1,25 @@
+---
+/**
+ * Full-bleed landing hero: background photo, headline and lead paragraph,
+ * with the Grip squiggle mark bleeding off the right edge.
+ * Used on the home, behandelaar and patiënt pages.
+ */
+interface Props {
+  heading: string;
+  /** Background photograph (path under /assets/media). */
+  image: string;
+}
+
+const { heading, image } = Astro.props;
+---
+
+<div class="block block-header-home page-block" style={`background-image: url(${image});`}>
+  <div class="website-content">
+    <div class="logo-squigly"></div>
+    <div class="home-description">
+      <h1>{heading}</h1>
+      <slot />
+    </div>
+  </div>
+</div>
+<div class="block block-lined website-content block-header-home-spacer"></div>

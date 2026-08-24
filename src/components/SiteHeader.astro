@@ -1,0 +1,48 @@
+---
+import { NAV } from '../config/site';
+
+interface Props {
+  /** Slug of the current page, used to mark the active nav item. */
+  current?: string;
+}
+
+const { current } = Astro.props;
+---
+
+<div class="website-header-bar">
+  <div class="website-content">
+    <a class="website-bar-logo logo" href="/" aria-label="Grip"></a>
+    <div class="website-bar-menu">
+      {
+        NAV.map((item) => (
+          <a
+            class:list={['website-bar-menuitem', { active: current === item.slug }]}
+            href={item.href || `/pages/${item.slug}`}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </div>
+    <div class="website-collapsed-menu" id="collapsed-menu">
+      {
+        NAV.map((item) => (
+          <a class="website-collapsed-menuitem" href={item.href}>
+            {item.labelFull}
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  // Mobile menu toggle — mirrors the `is-open` class the live site uses.
+  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('collapsed-menu');
+
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('is-open') ?? false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>

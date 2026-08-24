@@ -1,0 +1,22 @@
+---
+/**
+ * White rounded card, optionally topped with a cover image. Cards are
+ * inline-block so two consecutive <Card />s sit side by side, as on the
+ * behandelaar and patiënt pages.
+ */
+interface Props {
+  heading?: string;
+  image?: string;
+  alt?: string;
+}
+
+const { heading, image, alt = '' } = Astro.props;
+---
+
+<div class="block block-card page-block">
+  {image && <img class="img-responsive card-image" src={image} alt={alt} />}
+  <div class="card-content">
+    {heading && <h2>{heading}</h2>}
+    <slot />
+  </div>
+</div>

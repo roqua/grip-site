@@ -1,0 +1,28 @@
+---
+/**
+ * Pill link used inside prose blocks.
+ */
+interface Props {
+  href: string;
+  variant?: 'primary' | 'secondary' | 'orange' | 'white' | 'dark-blue' | 'purple' | 'green' | 'lila';
+  /** Open in a new tab (used for outbound links). */
+  external?: boolean;
+}
+
+const { href, variant = 'secondary', external = false } = Astro.props;
+
+// `orange` is a modifier on top of the secondary button, matching the live markup.
+const classes =
+  variant === 'orange' ? ['btn', 'btn-secondary', 'btn-orange'] : ['btn', `btn-${variant}`];
+---
+
+<p>
+  <a
+    class:list={classes}
+    href={href}
+    target={external ? '_blank' : undefined}
+    rel={external ? 'noopener' : undefined}
+  >
+    <slot />
+  </a>
+</p>
