@@ -58,5 +58,6 @@ const ogImage = image ? new URL(image, Astro.site).href : undefined;
       <slot />
     </div>
     <SiteFooter crumbs={crumbs} />
+    <script src="/scripts/site.js" defer></script>
   </body>
 </html>

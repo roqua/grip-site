@@ -35,14 +35,3 @@ const { current } = Astro.props;
     </div>
   </div>
 </div>
-
-<script>
-  // Mobile menu toggle — mirrors the `is-open` class the live site uses.
-  const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
-  const menu = document.getElementById('collapsed-menu');
-
-  toggle?.addEventListener('click', () => {
-    const open = menu?.classList.toggle('is-open') ?? false;
-    toggle.setAttribute('aria-expanded', String(open));
-  });
-</script>

@@ -13,7 +13,7 @@ interface Props {
 const { heading, image } = Astro.props;
 ---
 
-<div class="block block-header-home page-block" style={`background-image: url(${image});`}>
+<div class="block block-header-home page-block" data-bg={image}>
   <div class="website-content">
     <div class="logo-squigly"></div>
     <div class="home-description">
