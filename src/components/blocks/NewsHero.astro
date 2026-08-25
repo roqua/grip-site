@@ -12,9 +12,6 @@ const { heading, image } = Astro.props;
 ---
 
 <div class="block block-header block-news-header news-block"></div>
-<div
-  class="block block-news-image website-content news-block"
-  style={`background-image: url(${image});`}
->
+<div class="block block-news-image website-content news-block" data-bg={image}>
   <h1>{heading}</h1>
 </div>
